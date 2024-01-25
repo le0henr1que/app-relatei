@@ -1,0 +1,6 @@
+{
+  "singleQuote": true,
+  "editorconfig": true,
+  "bracketSpacing": true,
+  "endOfLine": "crlf"
+}
