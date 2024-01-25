@@ -8,11 +8,15 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "serve": "vite serve --host 0.0.0.0"
+    "serve": "vite serve --host 0.0.0.0",
+    "prepare": "husky install"
   },
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
@@ -23,6 +27,9 @@
     "eslint": "^8.55.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
+    "husky": "^9.0.5",
+    "lint-staged": "^15.2.0",
+    "prettier": "3.2.4",
     "typescript": "^5.2.2",
     "vite": "^5.0.8"
   }
