@@ -1,7 +1,7 @@
 export function CardAction() {
   return (
     <div>
-      <button className="bg-[#7F56D9] rounded-[8px] w-[199px] btn btn-primary flex p-[12px 20px] justify-center items-center gap-[8px] ">
+      <button className="bg-[#7F56D9] rounded-[8px] w-[199px] btn btn-primary btn-lg flex p-[12px 20px] justify-center items-center gap-[8px] ">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -22,4 +22,3 @@ export function CardAction() {
     </div>
   );
 }
-
