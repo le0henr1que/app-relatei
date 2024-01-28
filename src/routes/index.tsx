@@ -6,6 +6,10 @@ const router = createBrowserRouter([
     path: '/',
     element: <Home />,
   },
+  {
+    path: '/formulario',
+    element: <h1> ola mundo</h1>,
+  },
 ]);
 
 export const GlobalRoutes = () => {
