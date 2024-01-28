@@ -36,7 +36,26 @@ export function Home() {
                 />
               </div>
 
-              <Card.Action />
+              <Card.Action
+                title="Criar Relato"
+                icon={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                  >
+                    <path
+                      d="M11.6667 1.66666H5.00001C4.55798 1.66666 4.13406 1.84225 3.8215 2.15481C3.50894 2.46737 3.33334 2.8913 3.33334 3.33332V16.6667C3.33334 17.1087 3.50894 17.5326 3.8215 17.8452C4.13406 18.1577 4.55798 18.3333 5.00001 18.3333H15C15.442 18.3333 15.866 18.1577 16.1785 17.8452C16.4911 17.5326 16.6667 17.1087 16.6667 16.6667V6.66666M11.6667 1.66666L16.6667 6.66666M11.6667 1.66666V6.66666H16.6667M13.3333 10.8333H6.66668M13.3333 14.1667H6.66668M8.33334 7.49999H6.66668"
+                      stroke="white"
+                      stroke-width="1.67"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                }
+              />
             </Card.Root>
 
             <Card.Root>
@@ -64,7 +83,26 @@ export function Home() {
                 />
               </div>
 
-              <Card.Action />
+              <Card.Action
+                title="Acompanhar Relato"
+                icon={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="21"
+                    height="20"
+                    viewBox="0 0 21 20"
+                    fill="none"
+                  >
+                    <path
+                      d="M18 12.5C18 12.942 17.8244 13.366 17.5118 13.6785C17.1993 13.9911 16.7754 14.1667 16.3333 14.1667H6.33333L3 17.5V4.16667C3 3.72464 3.17559 3.30072 3.48816 2.98816C3.80072 2.67559 4.22464 2.5 4.66667 2.5H16.3333C16.7754 2.5 17.1993 2.67559 17.5118 2.98816C17.8244 3.30072 18 3.72464 18 4.16667V12.5Z"
+                      stroke="white"
+                      stroke-width="1.67"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                }
+              />
             </Card.Root>
           </div>
         </Main>
