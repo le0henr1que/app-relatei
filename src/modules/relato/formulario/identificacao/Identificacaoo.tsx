@@ -36,6 +36,7 @@ export function Identificacao() {
                 label="Não, não quero me identificar"
                 checked={false}
               />
+              oi
             </div>
           </PerguntaRoot>
 
