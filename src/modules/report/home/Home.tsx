@@ -1,7 +1,7 @@
 import { Main } from '../../../shared/components/Main/Main';
 import { Card } from './components/card';
-import { Footer } from './components/footer';
-import { Header } from './components/header';
+import { Footer } from '../components/footer';
+import { Header } from '../components/header';
 
 export function Home() {
   return (

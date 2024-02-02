@@ -5,7 +5,7 @@ interface CheckboxProps {
   // onChange: (checked: boolean) => void;
 }
 
-export function PerguntaCheck({ label, checked }: CheckboxProps) {
+export function QuestionCheck({ label, checked }: CheckboxProps) {
   return (
     <div className="flex flex-col items-start content-start gap-x-16 gap-y-48 self-stretch flex-wrap ">
       <label className="text-sm text-gray-600">
