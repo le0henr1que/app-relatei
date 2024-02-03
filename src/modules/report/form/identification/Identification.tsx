@@ -1,6 +1,6 @@
-import { Main } from '../../../../shared/components/Main/Main';
-import { Header } from '../../components/header';
-import { Footer } from '../../components/footer';
+import { Main } from '../../../../shared/components/Main';
+import { Header } from '../../components/Header';
+import { Footer } from '../../components/Footer';
 import { Question } from './components/question';
 
 export function Identification() {

@@ -1,10 +1,15 @@
-import { Main } from '../../../shared/components/Main/Main';
+import { Main } from '../../../shared/components/Main';
 import { Card } from './components/card';
-import { Footer } from '../components/footer';
-import { Header } from '../components/header';
+import { Footer } from '../components/Footer';
+import { Header } from '../components/Header';
 import { useNavigate } from 'react-router-dom';
+import { useLoginQuery } from '../../../services/access/login';
 
 export function Home() {
+  // const { data } = useLoginQuery({
+  //   ra: 'teste',
+  // });
+  // console.log('terste', data);
   const navigate = useNavigate();
   return (
     <>
@@ -12,7 +17,7 @@ export function Home() {
         <Header />
 
         <Main>
-          <div className="w-full flex justify-center items-center mt-[84px] gap-[50px]">
+          <div className="w-full flex flex-col md:flex-row sm:flex-column sm:mt-[46px] justify-center md:items-start sm:items-center md:mt-[84px] gap-8 md:gap-16">
             <Card.Root>
               <div className="flex flex-col gap-[24px] items-center justify-center">
                 <Card.Icon
@@ -85,7 +90,22 @@ export function Home() {
                   description="Digite abaixo o código do protocolo e clique no botão para acompanhar o andamento do seu relato"
                 />
               </div>
-
+              <div className="w-full flex flex-col gap-[6px]">
+                <label
+                  className="text-[#344054] font-inter text-sm md:text-base font-normal font-medium leading-5 md:leading-6"
+                  htmlFor="name"
+                >
+                  Digite abaixo o código do protocolo{' '}
+                </label>
+                <input
+                  className="form-input flex p-3 items-center gap-2 self-stretch rounded-lg border border-gray-300 bg-white shadow-xs"
+                  placeholder="Ex: 123456"
+                  id="name"
+                ></input>
+                <span clasName="text-[#344054] font-inter text-base font-normal">
+                  O código é entregue ao finalizar um relato
+                </span>
+              </div>
               <Card.Action
                 onClick={() => navigate('/formulario/relato')}
                 title="Acompanhar Relato"
