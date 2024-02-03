@@ -1,12 +1,13 @@
+import { BrowserRouter } from 'react-router-dom';
 import { GlobalRoutes } from './routes';
 
 function App() {
   return (
-    // <Provider store={store}>
-    // <Router>
-    <GlobalRoutes />
-    //</Router>
-    // </Provider>
+    <>
+      <BrowserRouter>
+        <GlobalRoutes />
+      </BrowserRouter>
+    </>
   );
 }
 
