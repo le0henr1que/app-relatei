@@ -1,15 +1,12 @@
 import { api } from '../api';
 
 export const exitEarlyApi = api.injectEndpoints({
-  endpoints: (builder: {
-    query: (arg0: {
-      query: (ra: any) => string;
-      providesTags: string[];
-    }) => any;
-  }) => ({
-    login: builder.query({
-      query: (ra) => `/students/${ra}`,
-      providesTags: ['teste'],
+  endpoints: (build) => ({
+    login: build.query<any, void>({
+      query: () => ({
+        url: '/login',
+        method: 'GET',
+      }),
     }),
   }),
 });
