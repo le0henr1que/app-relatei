@@ -2,8 +2,10 @@ import { Main } from '../../../shared/components/Main/Main';
 import { Card } from './components/card';
 import { Footer } from '../components/footer';
 import { Header } from '../components/header';
+import { useNavigate } from 'react-router-dom';
 
 export function Home() {
+  const navigate = useNavigate();
   return (
     <>
       <div className="flex flex-col min-h-screen">
@@ -37,6 +39,7 @@ export function Home() {
               </div>
 
               <Card.Action
+                onClick={() => navigate('/formulario/relato')}
                 title="Criar Relato"
                 icon={
                   <svg
@@ -84,6 +87,7 @@ export function Home() {
               </div>
 
               <Card.Action
+                onClick={() => navigate('/formulario/relato')}
                 title="Acompanhar Relato"
                 icon={
                   <svg
