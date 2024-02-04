@@ -1,19 +1,34 @@
 import { useProgress } from '@/store/ducks/progress/hooks/actions';
 import { useProgressState } from '@/store/ducks/progress/hooks/progressState';
+import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 
-export function ButtonProgress({ disabled, initialState }: any) {
+export function ButtonProgress({ disabled }: any) {
   const { nextStep, prevStep } = useProgress();
+
   const { currentStep } = useProgressState();
+  const currentStepCookies = Cookies.get('currentStep');
+
+  let formDataCookiesValues = Cookies.get('formData');
+  let dataObject = formDataCookiesValues
+    ? JSON.parse(formDataCookiesValues)
+    : {};
+  // useEffect(() => {
+  //   setButtonState(disabled);
+  // }, [disabled]);
+
   console.log('disabled', disabled);
-  console.log('initialState', initialState);
   return (
     <>
       <div className="w-[797px]  flex justify-between mt-[64px]">
         <div>
-          {currentStep !== 0 && (
+          {((currentStepCookies || currentStep) as number) !== 0 && (
             <button
-              onClick={() => prevStep()}
+              onClick={() => {
+                let dataString = JSON.stringify(dataObject);
+                Cookies.set('formData', dataString);
+                prevStep();
+              }}
               className="bg-[#FFF] rounded-[8px] border border-[#D0D5DD] w-auto btn  btn-lg flex p-[12px 20px] justify-center items-center gap-[8px] "
             >
               <svg

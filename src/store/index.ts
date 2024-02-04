@@ -6,9 +6,11 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { api } from '@/services/api';
 import { setupListeners } from '@reduxjs/toolkit/query';
+import { DialogModalState } from './ducks/dialog-modal/types';
 
 export interface ApplicationState {
   progress: ProgressState;
+  dialogModal: DialogModalState;
 }
 
 const persistConfig = {

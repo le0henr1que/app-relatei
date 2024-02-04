@@ -1,8 +1,13 @@
 import { ProgressState } from './types';
 import { createSlice } from '@reduxjs/toolkit';
+import Cookies from 'js-cookie';
+
+const initialStep = Cookies.get('currentStep')
+  ? parseInt(Cookies.get('currentStep') as string)
+  : 0;
 
 const INITIAL_STATE: ProgressState = {
-  currentStep: 0,
+  currentStep: initialStep,
 };
 
 const progress = createSlice({
@@ -14,6 +19,8 @@ const progress = createSlice({
         action.payload.type === 'NEXT_STEP'
           ? state.currentStep + 1
           : state.currentStep - 1;
+
+      Cookies.set('currentStep', state.currentStep.toString());
     },
   },
 });

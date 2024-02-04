@@ -4,32 +4,100 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ButtonProgress } from '../components/ButtonProgress';
 import { useProgress } from '@/store/ducks/progress/hooks/actions';
-const schema = z.object({
-  isVictim: z.string('Campo obrigatório'),
-  isIdentity: z.string('Campo obrigatório'),
-});
+import { InputText } from '../../components/Input';
+import { useEffect, useState } from 'react';
+import { useProgressState } from '@/store/ducks/progress/hooks/progressState';
+import Cookies from 'js-cookie';
+
+const schema = z
+  .object({
+    isVictim: z.string(),
+    isIdentity: z.string(),
+    victimName: z.string().optional(),
+    responsibleName: z.string().optional(),
+    name: z.string().optional(),
+    email: z.string().optional(),
+  })
+  .refine(
+    (data) => {
+      if (data.isVictim === 'notVictim') {
+        return data.victimName && data.responsibleName;
+      }
+
+      return true;
+    },
+    {
+      message:
+        'Nome da vítima e nome do responsável são obrigatórios quando a pessoa não é a vítima',
+    },
+  )
+  .refine(
+    (data) => {
+      if (data.isIdentity === 'yesIdentity') {
+        return data.name && data.email;
+      }
+
+      return true;
+    },
+    {
+      message: 'Nome e email são obrigatórios quando a identidade é confirmada',
+    },
+  );
 export function Identification() {
   const { nextStep } = useProgress();
+  const { currentStep } = useProgressState();
 
+  const [buttonState, setButtonState] = useState(true);
+
+  let formDataCookiesValues = Cookies.get('formData');
+  let dataObject = formDataCookiesValues
+    ? JSON.parse(formDataCookiesValues)
+    : {};
+
+  const defaultValues = {
+    isVictim: dataObject.identity?.isVictim,
+    isIdentity: dataObject.identity?.isIdentity,
+    victimName: dataObject.identity?.victimName,
+    responsibleName: dataObject.identity?.responsibleName,
+    name: dataObject.identity?.name,
+    email: dataObject.identity?.email,
+  };
   const {
     control,
     handleSubmit,
     watch,
+    setValue,
+    register,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(schema),
+    defaultValues,
   });
   const watchAllFields = watch();
-  console.log(watchAllFields);
-  const isDisabled = Object.values(watchAllFields).some((x) => !x);
-  console.log(Object.values(watchAllFields).some((x) => !x));
+  let newWatch = watchAllFields;
+
+  if (watchAllFields.isVictim !== 'notVictim') {
+    delete newWatch.victimName;
+    delete newWatch.responsibleName;
+  }
+  if (watchAllFields.isIdentity !== 'yesIdentity') {
+    delete newWatch.name;
+    delete newWatch.email;
+  }
+  console.log(errors);
+  const isDisabled = Object.values(newWatch).some((x) => !x);
 
   const onSubmit = async (data) => {
-    console.log(data);
-    console.log(errors);
-
+    let dataString = JSON.stringify({ ...dataObject, identity: data });
+    Cookies.set('formData', dataString);
+    Cookies.set('currentStep', String(currentStep));
     nextStep();
   };
+
+  useEffect(() => {
+    setButtonState(isDisabled);
+  }, [isDisabled]);
+
   return (
     <>
       <Question.Root>
@@ -59,7 +127,7 @@ export function Identification() {
                   ),
                 },
                 {
-                  label: 'Sim, não sou a vítima',
+                  label: 'Sim, sou a vítima',
                   content: (
                     <Controller
                       name="isVictim"
@@ -96,6 +164,22 @@ export function Identification() {
                 },
               ]}
             />
+            {watchAllFields.isVictim === 'notVictim' && (
+              <div className="mt-[16px]">
+                <InputText
+                  errorMessage={errors.victimName?.message}
+                  label="Insira o nome da vítima"
+                  placeholder="Nome da vitma"
+                  {...register('victimName')}
+                />
+                <InputText
+                  errorMessage={errors.responsibleName?.message}
+                  label="Insira o nome da vítima"
+                  placeholder="Nome da vitma"
+                  {...register('responsibleName')}
+                />
+              </div>
+            )}
           </Question.Content>
           <Question.Content title="Você deseja se identificar?">
             <Question.Check
@@ -138,8 +222,24 @@ export function Identification() {
                 },
               ]}
             />
+            {watchAllFields.isIdentity === 'yesIdentity' && (
+              <div className="mt-[16px]">
+                <InputText
+                  errorMessage={errors.victimName?.message}
+                  label="Digite seu nome"
+                  placeholder="Nome"
+                  {...register('name')}
+                />
+                <InputText
+                  errorMessage={errors.responsibleName?.message}
+                  label="Digite seu email"
+                  placeholder="Email"
+                  {...register('email')}
+                />
+              </div>
+            )}
           </Question.Content>
-          <ButtonProgress disabled={isDisabled} initialState={true} />
+          <ButtonProgress disabled={buttonState} />
         </form>
       </Question.Root>
     </>

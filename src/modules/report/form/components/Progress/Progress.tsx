@@ -1,9 +1,12 @@
 import { useProgressState } from '@/store/ducks/progress/hooks/progressState';
+import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 
 export function Progress({ steps }: any) {
   const [isLoaded, setIsLoaded] = useState(false);
   const { currentStep } = useProgressState();
+
+  const currentStepCookies = Cookies.get('currentStep');
 
   useEffect(() => {
     setTimeout(() => {
@@ -22,12 +25,13 @@ export function Progress({ steps }: any) {
           <div className="self-stretch justify-between items-center inline-flex">
             <div className="justify-start items-center gap-1.5 flex">
               <div className="text-center text-violet-500 text-2xl font-semibold font-['Inter'] leading-loose">
-                {steps[currentStep].title}
+                {steps[(currentStepCookies || currentStep) as number].title}
               </div>
             </div>
             <div className="justify-end items-center gap-0.5 flex">
               <div className="text-center text-gray-400 text-sm font-medium font-['Inter'] leading-tight">
-                Etapa {currentStep + 1} de {steps.length}
+                Etapa {((+currentStepCookies || +currentStep) as number) + 1} de{' '}
+                {steps.length}
               </div>
             </div>
           </div>
@@ -41,7 +45,8 @@ export function Progress({ steps }: any) {
             >
               <div
                 className={`grow shrink basis-0 h-3 rounded-[50px] ${
-                  isLoaded && currentStep >= step.id - 1
+                  isLoaded &&
+                  ((currentStepCookies || currentStep) as number) >= step.id - 1
                     ? 'w-full bg-violet-500 transition-all duration-1000'
                     : 'w-0 bg-violet-500 transition-all duration-1000'
                 }`}
