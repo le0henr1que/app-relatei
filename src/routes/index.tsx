@@ -5,14 +5,14 @@ import {
   Routes,
 } from 'react-router-dom';
 import { Home } from '../modules/report/home';
-import { FormRoutes } from '../modules/report/form/form.routes';
+import { Form } from '@/modules/report/form';
 
 export const GlobalRoutes = () => {
   return (
     <div className="w-full">
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/formulario/*" element={<FormRoutes />} />
+        <Route path="/formulario/" element={<Form />} />
       </Routes>
     </div>
   );

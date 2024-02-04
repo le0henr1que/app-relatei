@@ -2,8 +2,8 @@ import { Main } from '../../../shared/components/Main';
 import { Card } from './components/card';
 import { Footer } from '../components/Footer';
 import { Header } from '../components/Header';
-import { useRepositoriesState } from '@/store/ducks/repositories/hooks/repositoriesState';
-import { useRepositories } from '@/store/ducks/repositories/hooks/actions';
+import { useRepositoriesState } from '@/store/ducks/progress/hooks/repositoriesState';
+import { useRepositories } from '@/store/ducks/progress/hooks/actions';
 import { useNavigate } from 'react-router-dom';
 import { useLoginQuery } from '@/services/access/login';
 import { useForm } from 'react-hook-form';
@@ -25,15 +25,9 @@ export function Home() {
   } = useForm({
     resolver: zodResolver(schema),
   });
-  // const { setData } = useRepositories();
-  // setData({
-  //   id: 2,
-  //   name: 'teste',
-  // });
-  // const { data: response } = useLoginQuery();
+
   const navigate = useNavigate();
-  // const { data } = useRepositoriesState();
-  // console.log(data, response);
+
   const onSubmit = async (data) => {
     console.log(data);
   };
@@ -41,7 +35,6 @@ export function Home() {
     <>
       <div className="flex flex-col min-h-screen">
         <Header />
-
         <Main>
           <div className="w-full flex flex-col md:flex-row sm:flex-column sm:mt-[46px] justify-center md:items-start sm:items-center md:mt-[84px] gap-8 md:gap-16">
             <Card.Root>
@@ -71,7 +64,7 @@ export function Home() {
 
               <Card.Action
                 type="button"
-                onClick={() => navigate('/formulario/relato')}
+                onClick={() => navigate('/formulario')}
                 title="Criar Relato"
                 icon={
                   <svg

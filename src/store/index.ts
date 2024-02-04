@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { RepositoriesState } from './ducks/repositories/types';
+import { ProgressState } from './ducks/progress/types';
 
 import rootReducer from './ducks/rootReducer';
 import { persistReducer, persistStore } from 'redux-persist';
@@ -8,7 +8,7 @@ import { api } from '@/services/api';
 import { setupListeners } from '@reduxjs/toolkit/query';
 
 export interface ApplicationState {
-  repositories: RepositoriesState;
+  progress: ProgressState;
 }
 
 const persistConfig = {

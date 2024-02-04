@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import repositories from './repositories';
+import progress from './progress';
 import { api } from '@/services/api';
 
 export default combineReducers({
-  repositories,
+  progress,
   [api.reducerPath]: api.reducer,
 });
