@@ -71,7 +71,7 @@ export function ButtonProgress({ disabled }: any) {
                 stroke-linejoin="round"
               />
             </svg>
-            Próxima etapa
+            Próxima Etapa
           </button>
         </div>
       </div>
