@@ -1,18 +1,42 @@
-import { Main } from '../../../shared/components/Main/Main';
+import { Main } from '../../../shared/components/Main';
 import { Card } from './components/card';
-import { Footer } from '../components/footer';
-import { Header } from '../components/header';
+import { Footer } from '../components/Footer';
+import { Header } from '../components/Header';
+import { useRepositoriesState } from '@/store/ducks/progress/hooks/repositoriesState';
+import { useRepositories } from '@/store/ducks/progress/hooks/actions';
 import { useNavigate } from 'react-router-dom';
+import { useLoginQuery } from '@/services/access/login';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { InputText } from '../components/Input';
 
 export function Home() {
+  const schema = z.object({
+    protocol: z
+      .string()
+      .min(3, 'Mínimo 3 caracteres')
+      .max(50, 'Máximo 50 caracteres'),
+  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(schema),
+  });
+
   const navigate = useNavigate();
+
+  const onSubmit = async (data) => {
+    console.log(data);
+  };
   return (
     <>
       <div className="flex flex-col min-h-screen">
         <Header />
-
         <Main>
-          <div className="w-full flex justify-center items-center mt-[84px] gap-[50px]">
+          <div className="w-full flex flex-col md:flex-row sm:flex-column sm:mt-[46px] justify-center md:items-start sm:items-center md:mt-[84px] gap-8 md:gap-16">
             <Card.Root>
               <div className="flex flex-col gap-[24px] items-center justify-center">
                 <Card.Icon
@@ -39,7 +63,8 @@ export function Home() {
               </div>
 
               <Card.Action
-                onClick={() => navigate('/formulario/relato')}
+                type="button"
+                onClick={() => navigate('/formulario')}
                 title="Criar Relato"
                 icon={
                   <svg
@@ -85,28 +110,43 @@ export function Home() {
                   description="Digite abaixo o código do protocolo e clique no botão para acompanhar o andamento do seu relato"
                 />
               </div>
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="flex flex-col gap-3 justify-center items-center"
+              >
+                <InputText
+                  label="Protocolo"
+                  placeholder="Ex: 123456"
+                  errorMessage={errors.protocol?.message}
+                  {...register('protocol')}
+                />
 
-              <Card.Action
-                onClick={() => navigate('/formulario/relato')}
-                title="Acompanhar Relato"
-                icon={
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="21"
-                    height="20"
-                    viewBox="0 0 21 20"
-                    fill="none"
-                  >
-                    <path
-                      d="M18 12.5C18 12.942 17.8244 13.366 17.5118 13.6785C17.1993 13.9911 16.7754 14.1667 16.3333 14.1667H6.33333L3 17.5V4.16667C3 3.72464 3.17559 3.30072 3.48816 2.98816C3.80072 2.67559 4.22464 2.5 4.66667 2.5H16.3333C16.7754 2.5 17.1993 2.67559 17.5118 2.98816C17.8244 3.30072 18 3.72464 18 4.16667V12.5Z"
-                      stroke="white"
-                      stroke-width="1.67"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                }
-              />
+                <span className="text-[#344054] font-inter text-base font-normal">
+                  O código é entregue ao finalizar um relato
+                </span>
+
+                <Card.Action
+                  type="submit"
+                  title="Acompanhar Relato"
+                  icon={
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="21"
+                      height="20"
+                      viewBox="0 0 21 20"
+                      fill="none"
+                    >
+                      <path
+                        d="M18 12.5C18 12.942 17.8244 13.366 17.5118 13.6785C17.1993 13.9911 16.7754 14.1667 16.3333 14.1667H6.33333L3 17.5V4.16667C3 3.72464 3.17559 3.30072 3.48816 2.98816C3.80072 2.67559 4.22464 2.5 4.66667 2.5H16.3333C16.7754 2.5 17.1993 2.67559 17.5118 2.98816C17.8244 3.30072 18 3.72464 18 4.16667V12.5Z"
+                        stroke="white"
+                        stroke-width="1.67"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  }
+                />
+              </form>
             </Card.Root>
           </div>
         </Main>
