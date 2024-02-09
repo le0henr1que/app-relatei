@@ -120,7 +120,7 @@ export function Identification() {
                           checked={value === 'notVictim'}
                           onChange={() => onChange('notVictim')}
                           {...rest}
-                          className="form-radio h-5 w-5 text-[#7F56D9]"
+                          className="form-radio h-5 w-5 text-[#7F56D9] border border-gray-300"
                         />
                       )}
                     />
@@ -138,7 +138,7 @@ export function Identification() {
                           checked={value === 'yesVictim'}
                           onChange={() => onChange('yesVictim')}
                           {...rest}
-                          className="form-radio h-5 w-5 text-[#7F56D9]"
+                          className="form-radio h-5 w-5 text-[#7F56D9] border border-gray-300"
                         />
                       )}
                     />
@@ -156,7 +156,7 @@ export function Identification() {
                           checked={value === 'impersonalCase'}
                           onChange={() => onChange('impersonalCase')}
                           {...rest}
-                          className="form-radio h-5 w-5 text-[#7F56D9]"
+                          className="form-radio h-5 w-5 text-[#7F56D9] border border-gray-300"
                         />
                       )}
                     />
@@ -196,7 +196,7 @@ export function Identification() {
                           checked={value === 'yesIdentity'}
                           onChange={() => onChange('yesIdentity')}
                           {...rest}
-                          className="form-radio h-5 w-5 text-[#7F56D9]"
+                          className="form-radio h-5 w-5 text-[#7F56D9] border border-gray-300"
                         />
                       )}
                     />
@@ -214,7 +214,7 @@ export function Identification() {
                           checked={value === 'noIdentity'}
                           onChange={() => onChange('noIdentity')}
                           {...rest}
-                          className="form-radio h-5 w-5 text-[#7F56D9]"
+                          className="form-radio h-5 w-5 text-[#7F56D9] border border-gray-300"
                         />
                       )}
                     />
