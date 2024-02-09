@@ -36,15 +36,15 @@ export function Home() {
       <div className="flex flex-col min-h-screen">
         <Header />
         <Main>
-          <div className="w-full flex flex-col md:flex-row sm:flex-column sm:mt-[46px] justify-center md:items-start sm:items-center md:mt-[84px] gap-8 md:gap-16">
+          <div className="w-full flex flex-col md:flex-row sm:flex-column sm:mt-[46px] justify-center md:items-start sm:items-center md:mt-[34px] gap-8 md:gap-16">
             <Card.Root>
               <div className="flex flex-col gap-[24px] items-center justify-center">
                 <Card.Icon
                   icon={
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="61"
-                      height="62"
+                      width="48"
+                      height="48"
                       viewBox="0 0 61 62"
                       fill="#7F56D9"
                     >
@@ -92,8 +92,8 @@ export function Home() {
                   icon={
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="87"
-                      height="86"
+                      width="48"
+                      height="48"
                       viewBox="0 0 87 86"
                       fill="none"
                     >
@@ -110,21 +110,24 @@ export function Home() {
                   description="Digite abaixo o código do protocolo e clique no botão para acompanhar o andamento do seu relato"
                 />
               </div>
+              
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="flex flex-col gap-3 justify-center items-center"
               >
+<div className="p-[6px]">                
                 <InputText
                   label="Protocolo"
                   placeholder="Ex: 123456"
                   errorMessage={errors.protocol?.message}
                   {...register('protocol')}
                 />
+                
 
-                <span className="text-[#344054] font-inter text-base font-normal">
+                <span className="text-[#344054] font-inter text-base font-normal text-[18px] ">
                   O código é entregue ao finalizar um relato
                 </span>
-
+</div>
                 <Card.Action
                   type="submit"
                   title="Acompanhar Relato"
@@ -147,6 +150,7 @@ export function Home() {
                   }
                 />
               </form>
+              
             </Card.Root>
           </div>
         </Main>
