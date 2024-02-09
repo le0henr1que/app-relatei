@@ -9,7 +9,7 @@ export function CardContent({ title, description }: IContentProps) {
       <div className="text-[#1D2939] font-inter font-semibold text-[30px] leading-9">
         {title}
       </div>
-      <div className="text-[#1D2939] text-center font-inter text-[19px] leading-7">
+      <div className="text-[#1D2939] text-center font-inter text-[18px] leading-7">
         {description}
       </div>
     </div>
