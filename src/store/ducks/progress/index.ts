@@ -8,6 +8,7 @@ const initialStep = Cookies.get('currentStep')
 
 const INITIAL_STATE: ProgressState = {
   currentStep: initialStep,
+  finishStep:0
 };
 
 const progress = createSlice({
@@ -15,15 +16,25 @@ const progress = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     step(state, action) {
-      state.currentStep =
-        action.payload.type === 'NEXT_STEP'
-          ? state.currentStep + 1
-          : state.currentStep - 1;
+
+      if(action.payload.type === 'NEXT_STEP'){
+       state.currentStep = state.currentStep + 1
+      }
+
+      if(action.payload.type === 'PREV_STEP' &&  state.currentStep === 0) return 
+
+      if(action.payload.type === 'PREV_STEP' ){
+        state.currentStep = state.currentStep - 1
+      }
+  
 
       Cookies.set('currentStep', state.currentStep.toString());
     },
+    finishStep(state, action){
+      state.finishStep = action.payload.amount
+    }
   },
 });
 
-export const { step } = progress.actions;
+export const { step, finishStep } = progress.actions;
 export default progress.reducer;

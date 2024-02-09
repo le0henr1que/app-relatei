@@ -14,6 +14,7 @@ import Alert from '../components/Alert/Alert';
 import { useEffect, useState } from 'react';
 import { useDialogModalState } from '@/store/ducks/dialog-modal/hooks/dialogModalState';
 import { useDialogModal } from '@/store/ducks/dialog-modal/hooks/actions';
+import { step } from '@/store/ducks/progress';
 
 const steps = [
   {
@@ -42,15 +43,21 @@ export function Form() {
   const { currentStep } = useProgressState();
   const { isOpen } = useDialogModalState();
   const { handleModal } = useDialogModal();
-
+  const { amountStep } = useProgress()
   const methods = useForm();
   const currentStepCookies = Cookies.get('currentStep');
   const formDataCookiesValues = Cookies.get('acceptCookie');
   console.log(formDataCookiesValues);
   useEffect(() => {
+    
     handleModal({
       isOpen: formDataCookiesValues !== 'true',
     });
+
+    amountStep({ 
+      amount: steps.length - 1
+    })
+
   }, [formDataCookiesValues]);
 
   const closeModal = () => {
