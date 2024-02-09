@@ -6,7 +6,8 @@ import { useEffect, useState } from 'react';
 export function ButtonProgress({ disabled }: any) {
   const { nextStep, prevStep } = useProgress();
 
-  const { currentStep } = useProgressState();
+  const { currentStep, finishStep } = useProgressState();
+  console.log(finishStep + "minha rola")
   const currentStepCookies = Cookies.get('currentStep');
 
   let formDataCookiesValues = Cookies.get('formData');
@@ -16,13 +17,13 @@ export function ButtonProgress({ disabled }: any) {
   // useEffect(() => {
   //   setButtonState(disabled);
   // }, [disabled]);
-
-  console.log('disabled', disabled);
+  const currentStepInDubleCase = (currentStepCookies || currentStep) as number
+  console.log('disabled', currentStepInDubleCase);
   return (
     <>
       <div className="w-[797px]  flex justify-between mt-[64px]">
         <div>
-          {((currentStepCookies || currentStep) as number) !== 0 && (
+          {currentStepInDubleCase != 0 && (
             <button
               onClick={() => {
                 let dataString = JSON.stringify(dataObject);
@@ -71,7 +72,8 @@ export function ButtonProgress({ disabled }: any) {
                 stroke-linejoin="round"
               />
             </svg>
-            Próxima Etapa
+          {finishStep === currentStep ? `Finalizar Etapa`: `Proxima Etapa`}
+
           </button>
         </div>
       </div>

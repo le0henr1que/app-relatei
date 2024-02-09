@@ -6,4 +6,5 @@ export interface Progress {
 // State type
 export interface ProgressState {
   currentStep: number;
+  finishStep: number;
 }
