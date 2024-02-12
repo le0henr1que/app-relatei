@@ -7,7 +7,6 @@ import { useProgress } from '@/store/ducks/progress/hooks/actions';
 import { useProgressState } from '@/store/ducks/progress/hooks/progressState';
 import { Informations } from './informations';
 import { Report } from './report/Report';
-import { ProtocolCode } from './protocol-code';
 import { FormProvider, useForm } from 'react-hook-form';
 import Cookies from 'js-cookie';
 import Alert from '../components/Alert/Alert';
@@ -32,50 +31,43 @@ const steps = [
     title: 'Relato',
     element: <Report />,
   },
-  {
-    id: 4,
-    title: 'Código do protocolo',
-    element: <ProtocolCode />,
-  },
 ];
 
 export function Form() {
   const { currentStep } = useProgressState();
   const { isOpen } = useDialogModalState();
   const { handleModal } = useDialogModal();
-  const { amountStep } = useProgress()
+  const { amountStep } = useProgress();
   const methods = useForm();
   const currentStepCookies = Cookies.get('currentStep');
   const formDataCookiesValues = Cookies.get('acceptCookie');
   console.log(formDataCookiesValues);
   useEffect(() => {
-    
-    handleModal({
-      isOpen: formDataCookiesValues !== 'true',
-    });
-
-    amountStep({ 
-      amount: steps.length - 1
-    })
-
-  }, [formDataCookiesValues]);
-
-  const closeModal = () => {
-    Cookies.set('acceptCookie', 'true');
     handleModal({
       isOpen: false,
     });
-  };
+
+    amountStep({
+      amount: steps.length - 1,
+    });
+  }, [formDataCookiesValues]);
+
+  // const closeModal = () => {
+  //   Cookies.set('acceptCookie', 'true');
+  //   handleModal({
+  //     isOpen: false,
+  //   });
+  // };
 
   return (
     <>
-      <Alert
+      {/* <Alert
         isOpen={isOpen}
         onClose={closeModal}
         initialState={true}
         title="teste"
         description="teste"
-      />
+      /> */}
       <div className="flex flex-col min-h-screen">
         <Header />
         <Main>
