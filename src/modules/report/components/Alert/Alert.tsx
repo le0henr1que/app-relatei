@@ -6,17 +6,17 @@ import { useDialogModal } from '@/store/ducks/dialog-modal/hooks/actions';
 interface AlertProps {
   isOpen: boolean;
   onClose: () => void;
-  title: string;
-  description: string;
-  initialState: boolean;
+  // title: string;
+  // description: string;
+  // initialState: boolean;
+  children: any;
 }
 
 const Alert: React.FC<AlertProps> = ({
   isOpen,
   onClose,
-  title,
-  description,
-  initialState,
+
+  children,
 }) => {
   // const { handleModal } = useDialogModal();
 
@@ -28,9 +28,10 @@ const Alert: React.FC<AlertProps> = ({
           onOpenAutoFocus={(event) => {
             event.preventDefault();
           }}
-          className="fixed bg-white py-8 px-10 text-white top-1/2 left-1/2 w-[480px] rounded-lg -translate-x-1/2 -translate-y-1/2  "
+          className="fixed bg-white py-8 p-[24px] px-10  top-1/2 left-1/2 w-[667px] rounded-lg -translate-x-1/2 -translate-y-1/2  "
         >
-          <Dialog.Title className="text-3xl text-white font-black">
+          {children}
+          {/* <Dialog.Title className="text-3xl text-white font-black">
             {title}
           </Dialog.Title>
           <Dialog.Description className="text-xl text-white">
@@ -38,7 +39,7 @@ const Alert: React.FC<AlertProps> = ({
           </Dialog.Description>
           <button className="btn btn-primary" onClick={onClose}>
             fechar modal
-          </button>
+          </button> */}
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
