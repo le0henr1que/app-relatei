@@ -1,14 +1,30 @@
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { ButtonProgress } from '../components/ButtonProgress';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useProgress } from '@/store/ducks/progress/hooks/actions';
 import { z } from 'zod';
+import Cookies from 'js-cookie';
+import { useDialogModal } from '@/store/ducks/dialog-modal/hooks/actions';
+import { useEffect, useState } from 'react';
+import Alert from '../../components/Alert/Alert';
+import { useDialogModalState } from '@/store/ducks/dialog-modal/hooks/dialogModalState';
+import { CopyIcon, HomeIcon } from '@radix-ui/react-icons';
+import { InputText } from '../../components/Input';
+import { useNavigate } from 'react-router-dom';
 
-const schema = z.object({});
+const schema = z.object({
+  descriptionOccurrence: z.string(),
+  dateOccurrence: z.string(),
+});
 
 export function Report() {
-  const { nextStep } = useProgress();
+  const { handleModal } = useDialogModal();
+  const [buttonState, setButtonState] = useState(true);
+  const navigate = useNavigate();
 
+  let formDataCookiesValues = Cookies.get('formData');
+  let dataObject = formDataCookiesValues
+    ? JSON.parse(formDataCookiesValues)
+    : {};
   const {
     control,
     handleSubmit,
@@ -18,14 +34,95 @@ export function Report() {
   } = useForm({
     resolver: zodResolver(schema),
   });
-  const onSubmit = async (data) => {
-    console.log(data);
-    console.log(errors);
 
-    nextStep();
+  const watchAllFields = watch();
+  let newWatch = watchAllFields;
+  console.log(watchAllFields);
+  const isDisabled = Object.values(newWatch).some((x) => !x);
+  const { isOpen } = useDialogModalState();
+
+  const onSubmit = async (data: any) => {
+    console.log('DADOS PARA ENVIO ---> ', { dataObject, report: data });
+    // if (finishStep === currentStep) {
+    handleModal({
+      isOpen: true,
+      // component: <div>Deu certo</div>,
+    });
+    // }
   };
+
+  const cleanCache = async () => {
+    await Cookies.remove('currentStep');
+    await Cookies.remove('formData');
+    window.location = '/';
+  };
+
+  useEffect(() => {
+    setButtonState(isDisabled);
+  }, [isDisabled]);
+
   return (
     <>
+      <Alert
+        isOpen={isOpen}
+        onClose={() => {
+          handleModal({
+            isOpen: false,
+          });
+        }}
+      >
+        <div className="flex flex-col gap-[24px]">
+          <div className="flex flex-col gap-[20px]">
+            <div>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g id="check-circle">
+                  <path
+                    id="Icon"
+                    d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18457 2.99721 7.13633 4.39828 5.49707C5.79935 3.85782 7.69279 2.71538 9.79619 2.24015C11.8996 1.76491 14.1003 1.98234 16.07 2.86M22 4L12 14.01L9.00001 11.01"
+                    stroke="#039855"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </g>
+              </svg>
+            </div>
+            <div>
+              <p className="self-stretch text-[#12B76A] font-semibold text-xl leading-7">
+                Relato entregue com sucesso!
+              </p>
+            </div>
+            <div>
+              <p className="self-stretch text-[#1D2939] ">
+                Analisaremos as informações fornecidas e tomaremos as medidas
+                cabíveis. Abaixo está o código do protocolo; com ele, você
+                poderá acompanhar o andamento do seu relato. Não o perca!
+              </p>
+            </div>
+            <div>
+              <InputText label="Código do protocolo" value="123456" />
+            </div>
+          </div>
+          <div className="flex flex-col gap-[12px]">
+            <button className="w-full p-[12px 20px] h-[48px] btn bg-primaryColor text-white flex gap-[8px] items-center justify-center">
+              <CopyIcon /> Copiar código de protocolo
+            </button>
+            <button
+              onClick={cleanCache}
+              className="w-full p-[12px 20px] h-[48px] btn bg-white text-[#344054] border border-[#D0D5DD] flex gap-[8px] items-center justify-center"
+            >
+              <HomeIcon /> Voltar ao menu principal
+            </button>
+          </div>
+        </div>
+      </Alert>
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col w-[783px] h-[433px] gap-[24px]">
           <h1 className="font-inter font-semibold text-xl">
@@ -35,19 +132,35 @@ export function Report() {
             <label className="text-sm font-medium font-inter text-base leading-5 tracking-normal text-left">
               Data da ocorrência
             </label>
-            <input
-              type="date"
-              className="w-full h-[44px] p-[10px] border border-gray-300 rounded-md gap-8"
+            <Controller
+              name="dateOccurrence"
+              control={control}
+              // defaultValue=""
+              render={({ field }) => (
+                <input
+                  type="date"
+                  {...field}
+                  className="w-full h-[44px] p-[10px] border border-gray-300 rounded-md gap-8"
+                />
+              )}
             />
           </div>
           <div className="flex flex-col gap-[6px]">
             <label className="text-sm font-medium font-inter text-base leading-5 tracking-normal text-left">
               Conte-nos o que aconteceu
             </label>
-            <textarea
-              placeholder="Ontem fui vítima de..."
-              className="w-full h-[128px] px-[14px] py-[10px] border border-gray-300 rounded-md gap-8 resize-none"
-            ></textarea>
+            <Controller
+              name="descriptionOccurrence"
+              control={control}
+              // defaultValue=""
+              render={({ field }) => (
+                <textarea
+                  {...field}
+                  placeholder="Ontem fui vítima de..."
+                  className="w-full h-[128px] px-[14px] py-[10px] border border-gray-300 rounded-md gap-8 resize-none"
+                ></textarea>
+              )}
+            />
             <p className="text-sm font-normal font-inter text-base leading-5 tracking-normal text-left text-gray-400">
               Forneça o máximo de detalhes possível.
             </p>
@@ -112,7 +225,7 @@ export function Report() {
             </label>
           </div>
         </div>
-        <ButtonProgress disabled={false} />
+        <ButtonProgress disabled={buttonState} />
       </form>
     </>
   );

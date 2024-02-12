@@ -6,11 +6,13 @@ export const InputText = forwardRef(
       label,
       placeholder,
       errorMessage,
+      value,
       ...props
     }: {
       label: any;
-      placeholder: any;
-      errorMessage: any;
+      placeholder?: any;
+      errorMessage?: any;
+      value?: any;
     },
     ref,
   ) => {
@@ -36,6 +38,7 @@ export const InputText = forwardRef(
           border-gray-300
           bg-white
         "
+          value={value && value}
           placeholder={placeholder}
           id="name"
           data-error={errorMessage ? 'true' : 'false'}

@@ -7,7 +7,6 @@ export function ButtonProgress({ disabled }: any) {
   const { nextStep, prevStep } = useProgress();
 
   const { currentStep, finishStep } = useProgressState();
-  console.log(finishStep + "minha rola")
   const currentStepCookies = Cookies.get('currentStep');
 
   let formDataCookiesValues = Cookies.get('formData');
@@ -17,7 +16,7 @@ export function ButtonProgress({ disabled }: any) {
   // useEffect(() => {
   //   setButtonState(disabled);
   // }, [disabled]);
-  const currentStepInDubleCase = (currentStepCookies || currentStep) as number
+  const currentStepInDubleCase = (currentStepCookies || currentStep) as number;
   console.log('disabled', currentStepInDubleCase);
   return (
     <>
@@ -72,8 +71,13 @@ export function ButtonProgress({ disabled }: any) {
                 stroke-linejoin="round"
               />
             </svg>
-          {finishStep === currentStep ? `Finalizar Etapa`: `Proxima Etapa`}
-
+            {finishStep === currentStep ? `Finalizar Etapa` : `Proxima Etapa`}
+            {/* <span
+              className="w-4 h-4 spinner"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            <span className="pl-1">Enviando...</span> */}
           </button>
         </div>
       </div>
