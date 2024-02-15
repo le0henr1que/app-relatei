@@ -9,7 +9,6 @@ import Alert from '../../components/Alert/Alert';
 import { useDialogModalState } from '@/store/ducks/dialog-modal/hooks/dialogModalState';
 import { CopyIcon, HomeIcon } from '@radix-ui/react-icons';
 import { InputText } from '../../components/Input';
-import { useNavigate } from 'react-router-dom';
 
 const schema = z.object({
   descriptionOccurrence: z.string(),
@@ -19,19 +18,12 @@ const schema = z.object({
 export function Report() {
   const { handleModal } = useDialogModal();
   const [buttonState, setButtonState] = useState(true);
-  const navigate = useNavigate();
 
   let formDataCookiesValues = Cookies.get('formData');
   let dataObject = formDataCookiesValues
     ? JSON.parse(formDataCookiesValues)
     : {};
-  const {
-    control,
-    handleSubmit,
-    watch,
-    register,
-    formState: { errors },
-  } = useForm({
+  const { control, handleSubmit, watch } = useForm({
     resolver: zodResolver(schema),
   });
 
@@ -52,9 +44,9 @@ export function Report() {
   };
 
   const cleanCache = async () => {
-    await Cookies.remove('currentStep');
-    await Cookies.remove('formData');
-    window.location = '/';
+    Cookies.remove('currentStep');
+    Cookies.remove('formData');
+    window.location.href = '/';
   };
 
   useEffect(() => {

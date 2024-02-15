@@ -9,11 +9,8 @@ import { Informations } from './informations';
 import { Report } from './report/Report';
 import { FormProvider, useForm } from 'react-hook-form';
 import Cookies from 'js-cookie';
-import Alert from '../components/Alert/Alert';
-import { useEffect, useState } from 'react';
-import { useDialogModalState } from '@/store/ducks/dialog-modal/hooks/dialogModalState';
+import { useEffect } from 'react';
 import { useDialogModal } from '@/store/ducks/dialog-modal/hooks/actions';
-import { step } from '@/store/ducks/progress';
 
 const steps = [
   {
@@ -35,7 +32,6 @@ const steps = [
 
 export function Form() {
   const { currentStep } = useProgressState();
-  const { isOpen } = useDialogModalState();
   const { handleModal } = useDialogModal();
   const { amountStep } = useProgress();
   const methods = useForm();

@@ -6,7 +6,7 @@ export function Progress({ steps }: any) {
   const [isLoaded, setIsLoaded] = useState(false);
   const { currentStep } = useProgressState();
 
-  const currentStepCookies = Cookies.get('currentStep');
+  const currentStepCookies:any = Cookies.get('currentStep');
 
   useEffect(() => {
     setTimeout(() => {
@@ -25,20 +25,24 @@ export function Progress({ steps }: any) {
           <div className="self-stretch justify-between items-center inline-flex">
             <div className="justify-start items-center gap-1.5 flex">
               <div className="text-center text-violet-500 text-2xl font-semibold font-['Inter'] leading-loose">
-                {steps[(currentStepCookies || currentStep) as number].title}
+                {
+                  steps[((+currentStepCookies ?? 0) || +currentStep) as number]
+                    .title
+                }
               </div>
             </div>
             <div className="justify-end items-center gap-0.5 flex">
               <div className="text-center text-gray-400 text-sm font-medium font-['Inter'] leading-tight">
-                Etapa {((+currentStepCookies || +currentStep) as number) + 1} de{' '}
-                {steps.length}
+                Etapa{' '}
+                {(((+currentStepCookies ?? 0) || +currentStep) as number) + 1}{' '}
+                de {steps.length}
               </div>
             </div>
           </div>
         </div>
 
         <div className="self-stretch justify-start items-start gap-1 inline-flex">
-          {steps.map((step) => (
+          {steps.map((step: any) => (
             <div
               key={steps.title}
               className="grow shrink basis-0 h-3 bg-black bg-opacity-10 rounded-[50px]"

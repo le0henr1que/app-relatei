@@ -1,7 +1,5 @@
 import * as React from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
-import { Cross1Icon } from '@radix-ui/react-icons';
-import { useDialogModal } from '@/store/ducks/dialog-modal/hooks/actions';
 
 interface AlertProps {
   isOpen: boolean;
@@ -47,3 +45,4 @@ const Alert: React.FC<AlertProps> = ({
 };
 
 export default Alert;
+

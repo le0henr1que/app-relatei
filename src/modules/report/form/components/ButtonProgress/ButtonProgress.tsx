@@ -1,10 +1,9 @@
 import { useProgress } from '@/store/ducks/progress/hooks/actions';
 import { useProgressState } from '@/store/ducks/progress/hooks/progressState';
 import Cookies from 'js-cookie';
-import { useEffect, useState } from 'react';
 
 export function ButtonProgress({ disabled }: any) {
-  const { nextStep, prevStep } = useProgress();
+  const { prevStep } = useProgress();
 
   const { currentStep, finishStep } = useProgressState();
   const currentStepCookies = Cookies.get('currentStep');

@@ -2,10 +2,7 @@ import { Main } from '../../../shared/components/Main';
 import { Card } from './components/card';
 import { Footer } from '../components/Footer';
 import { Header } from '../components/Header';
-import { useRepositoriesState } from '@/store/ducks/progress/hooks/repositoriesState';
-import { useRepositories } from '@/store/ducks/progress/hooks/actions';
 import { useNavigate } from 'react-router-dom';
-import { useLoginQuery } from '@/services/access/login';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -28,7 +25,7 @@ export function Home() {
 
   const navigate = useNavigate();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: any) => {
     console.log(data);
   };
   return (
@@ -110,24 +107,23 @@ export function Home() {
                   description="Digite abaixo o código do protocolo e clique no botão para acompanhar o andamento do seu relato"
                 />
               </div>
-              
+
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="flex flex-col gap-3 justify-center items-center"
               >
-<div className="p-[6px]">                
-                <InputText
-                  label="Protocolo"
-                  placeholder="Ex: 123456"
-                  errorMessage={errors.protocol?.message}
-                  {...register('protocol')}
-                />
-                
+                <div className="p-[6px]">
+                  <InputText
+                    label="Protocolo"
+                    placeholder="Ex: 123456"
+                    errorMessage={errors.protocol?.message}
+                    {...register('protocol')}
+                  />
 
-                <span className="text-[#344054] font-inter text-base font-normal text-[18px] ">
-                  O código é entregue ao finalizar um relato
-                </span>
-</div>
+                  <span className="text-[#344054] font-inter text-base font-normal text-[18px] ">
+                    O código é entregue ao finalizar um relato
+                  </span>
+                </div>
                 <Card.Action
                   type="submit"
                   title="Acompanhar Relato"
@@ -150,7 +146,6 @@ export function Home() {
                   }
                 />
               </form>
-              
             </Card.Root>
           </div>
         </Main>

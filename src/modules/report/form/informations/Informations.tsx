@@ -23,13 +23,7 @@ export function Informations() {
     relationshipCompany: dataObject.informations?.relationshipCompany,
     reportClassification: dataObject.informations?.reportClassification,
   };
-  const {
-    control,
-    handleSubmit,
-    watch,
-    register,
-    formState: { errors },
-  } = useForm({
+  const { control, handleSubmit, watch } = useForm({
     resolver: zodResolver(schema),
     defaultValues,
   });
@@ -39,7 +33,7 @@ export function Informations() {
 
   const isDisabled = Object.values(newWatch).some((x) => !x);
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: any) => {
     let dataString = JSON.stringify({ ...dataObject, informations: data });
     Cookies.set('formData', dataString);
     Cookies.set('currentStep', String(currentStep));

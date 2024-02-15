@@ -66,7 +66,6 @@ export function Identification() {
     control,
     handleSubmit,
     watch,
-    setValue,
     register,
     formState: { errors },
   } = useForm({
@@ -87,7 +86,7 @@ export function Identification() {
   console.log(errors);
   const isDisabled = Object.values(newWatch).some((x) => !x);
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: any) => {
     let dataString = JSON.stringify({ ...dataObject, identity: data });
     Cookies.set('formData', dataString);
     Cookies.set('currentStep', String(currentStep));
